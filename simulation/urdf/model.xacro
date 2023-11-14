@@ -1,0 +1,213 @@
+<?xml version="1.0" ?>
+<robot name="sbr" xmlns:xacro="https://www.ros.org/wiki/xacro" >
+    
+     <xacro:macro name="cuboid_inertia" params="mass x y z">
+        <inertia ixx="${1/12 * mass * ((x * x) + (y * y))}" ixy="0" ixz="0" 
+           iyy="${1/12 * mass * ((x * x) + (z * z))}" iyz="0" 
+           izz="${1/12 * mass * ((z * z) + (y * y))}" />
+     </xacro:macro>
+
+     <xacro:macro name="cylinder_inertia" params="mass radius height">
+        <inertia ixx="${1/12 * mass * (3 * radius * radius + height*height)}" ixy="0" ixz="0" 
+           iyy="${1/12 * mass * (3 * radius * radius + height*height)}" iyz="0" 
+           izz="${1/2 * mass * radius * radius}"/>
+     </xacro:macro>
+
+     <xacro:property name = "plate_x" value="0.105"/>
+     <xacro:property name="plate_y" value = "0.148"/>
+     <xacro:property name="plate_z" value="0.003"/>
+     <xacro:property name="plate_mass" value="0.055"/>
+
+     <xacro:property name="first_plate_spacing" value="0.035"/>
+     <xacro:property name="second_plate_spacing" value="0.07"/>
+
+     <xacro:property name="motor_x" value="0.042"/>
+     <xacro:property name="motor_y" value="0.042"/>
+     <xacro:property name="motor_z" value="0.042"/>
+     <xacro:property name="motor_mass" value="0.311"/>
+     <xacro:property name="gap_between_motor_and_plate" value="0.031"/>
+
+     <xacro:property name="wheel_mass" value="0.053"/>
+     <xacro:property name="wheel_radius" value="0.0425"/><!--value="0.0425"/>-->
+     <xacro:property name="wheel_height" value="0.035"/>
+
+     <xacro:property name="rod_mass" value="0.042"/>
+     <xacro:property name="rod_height" value="0.25"/>
+     <xacro:property name="rod_radius" value="0.003"/>
+     <xacro:property name="rod_distance_from_edge" value="0.01"/>
+
+     <xacro:property name="arduino_x" value="0.055"/>
+     <xacro:property name="arduino_y" value="0.11"/>
+     <xacro:property name="arduino_z" value="0.015"/>
+     <xacro:property name="arduino_mass" value="0.053"/>
+
+     <xacro:property name="breadboard_x" value="0.055"/>
+     <xacro:property name="breadboard_y" value="0.165"/>
+     <xacro:property name="breadboard_z" value="0.01"/>
+     <xacro:property name="breadboard_mass" value="0.076"/>
+     
+
+
+    <xacro:macro name = "cuboid" params="name mass x y z">
+        <link name="${name}">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <mass value="${mass}"/>
+                <xacro:cuboid_inertia mass="${mass}" z="${z}" x="${x}" y="${y}" />
+            </inertial>
+            <collision>
+                <geometry>
+                    <box size = "${x} ${y} ${z}" />
+                </geometry>
+            </collision>
+            <visual>
+                <geometry>
+                    <box size = "${x} ${y} ${z}" />
+                </geometry>
+            </visual>
+        </link>
+    </xacro:macro>
+
+    <xacro:macro name="rod" params="prefix">
+        <link name="${prefix}_rod">
+            <inertial>
+                <mass value="${rod_mass}"/>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <xacro:cylinder_inertia mass="${rod_mass}" radius="${rod_radius}" height="${rod_height}"/>
+            </inertial>
+            
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <cylinder length="${rod_height}" radius="${rod_radius}"/>
+                </geometry>
+            </collision>
+            
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder length="${rod_height}" radius="${rod_radius}"/>
+                </geometry>      
+            </visual>
+        </link>
+    </xacro:macro>
+
+    <xacro:macro name="wheel" params="prefix">
+        <link name="${prefix}_wheel">    
+            <inertial>
+                <mass value="${wheel_mass}"/>
+                <origin rpy="0 ${pi/2} ${pi/2}" xyz="0 0 0"/>
+                <xacro:cylinder_inertia mass="${wheel_mass}" radius="${wheel_radius}" height="${wheel_height}"/>
+            </inertial>
+            
+            <collision>
+                <origin rpy="0 ${pi/2} ${pi/2}" xyz="0 0 0" />
+                <geometry>
+                    <cylinder length="${wheel_height}" radius="${wheel_radius}"/>
+                </geometry>
+                
+            </collision>
+            
+            <visual>
+                <origin rpy="0 ${pi/2} ${pi/2}" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder length="${wheel_height}" radius="${wheel_radius}"/>
+                </geometry>      
+            </visual>
+            
+        </link>
+    </xacro:macro>
+
+    <xacro:macro name="fixed_chassis_joint" params="x_offset y_offset z_offset child_link">
+        <joint name="${child_link}_chassis_joint" type="fixed">
+            <origin rpy="0 0 0" xyz="${x_offset} ${y_offset} ${z_offset}"/>
+            <child link="${child_link}"/>
+            <parent link="chassis"/>
+
+        </joint>
+    </xacro:macro>
+
+    <xacro:macro name="wheel_joint" params="x_offset y_offset z_offset child_link axis_y">
+        <joint name="${child_link}_joint" type="continuous">
+            <origin rpy="0 0 0" xyz="${x_offset} ${y_offset} ${z_offset}"/>
+            <child link="${child_link}" />
+            <parent link="chassis"/>
+            <axis rpy="0 0 0" xyz="0 ${axis_y} 0"/>
+            <limit effort="10000" velocity="1000"/>
+            <joint_properties damping="1.0" friction="1.0" />
+        </joint> 
+    </xacro:macro>
+    
+    <link name="chassis">
+
+    </link>
+
+    <xacro:cuboid name="bottom_plate" x="${plate_x}" y="${plate_y}" z="${plate_z}" mass="${plate_mass}"/>
+    <xacro:cuboid name="middle_plate" x="${plate_x}" y="${plate_y}" z="${plate_z}" mass="${plate_mass}"/>
+    <xacro:cuboid name="top_plate" x="${plate_x}" y="${plate_y}" z="${plate_z}" mass="${plate_mass}"/>
+    
+    <xacro:fixed_chassis_joint child_link="bottom_plate" x_offset="0" y_offset="0" z_offset="0"/>
+    <xacro:fixed_chassis_joint child_link="middle_plate" x_offset="0" y_offset="0" z_offset="${first_plate_spacing}"/>
+    <xacro:fixed_chassis_joint child_link="top_plate" x_offset="0" y_offset="0" z_offset="${second_plate_spacing + first_plate_spacing}"/>
+
+    
+    <xacro:wheel prefix="right"/>
+    <xacro:wheel prefix="left"/>
+
+    <xacro:wheel_joint child_link="right_wheel" x_offset="0" y_offset="${(plate_y+ wheel_height)/2}" z_offset="${-(gap_between_motor_and_plate + motor_z/2)}" axis_y="-1"/>
+    <xacro:wheel_joint child_link="left_wheel" x_offset="0" y_offset="${-(plate_y+ wheel_height)/2}" z_offset="${-(gap_between_motor_and_plate + motor_z/2)}" axis_y="1"/>
+    
+    <xacro:cuboid name="right_motor" x="${motor_x}" y="${motor_y}" z="${motor_z}" mass="${motor_mass}"/>
+    <xacro:cuboid name="left_motor" x="${motor_x}" y="${motor_y}" z="${motor_z}" mass="${motor_mass}"/>
+
+    <xacro:fixed_chassis_joint child_link="right_motor" x_offset="0" z_offset="${-gap_between_motor_and_plate}" y_offset="${(plate_y - motor_y)/2}"/>
+    <xacro:fixed_chassis_joint child_link="left_motor" x_offset="0" z_offset="${-gap_between_motor_and_plate}" y_offset="${-(plate_y - motor_y)/2}"/>
+
+    <xacro:rod prefix="back_left"/>
+    <xacro:rod prefix="back_right"/>
+    <xacro:rod prefix="front_left"/>
+    <xacro:rod prefix="front_right"/>
+
+    <xacro:fixed_chassis_joint child_link="back_left_rod" x_offset="${-(0.5 * plate_x - rod_distance_from_edge)}" y_offset="${-(0.5 * plate_y - rod_distance_from_edge)}" z_offset="${1/2 * rod_height}"/>
+    <xacro:fixed_chassis_joint child_link="back_right_rod" x_offset="${-(0.5 * plate_x - rod_distance_from_edge)}" y_offset="${(0.5 * plate_y - rod_distance_from_edge)}" z_offset="${1/2 * rod_height}"/>
+    <xacro:fixed_chassis_joint child_link="front_left_rod" x_offset="${(0.5 * plate_x - rod_distance_from_edge)}" y_offset="${-(0.5 * plate_y - rod_distance_from_edge)}" z_offset="${1/2 * rod_height}"/>
+    <xacro:fixed_chassis_joint child_link="front_right_rod" x_offset="${(0.5 * plate_x - rod_distance_from_edge)}" y_offset="${(0.5 * plate_y - rod_distance_from_edge)}" z_offset="${1/2 * rod_height}"/>
+
+    <xacro:cuboid name="breadboard" x="${breadboard_x}" y="${breadboard_y}" z="${breadboard_z}" mass="${breadboard_mass}"/>
+    <xacro:fixed_chassis_joint child_link="breadboard" x_offset="0" y_offset="0" z_offset="${first_plate_spacing + second_plate_spacing + 0.5 * plate_z + 0.5 * breadboard_z}"/>
+
+    <xacro:cuboid name="arduino" x="${arduino_x}" y="${arduino_y}" z="${arduino_z}" mass="${arduino_mass}"/>
+    <xacro:fixed_chassis_joint child_link="arduino" x_offset="0" y_offset="0" z_offset="${0.5 * plate_z + first_plate_spacing}"/>
+
+    <gazebo>
+        <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+            <update_rate>20</update_rate>
+            <left_joint>left_wheel_joint</left_joint>
+            <right_joint>right_wheel_joint</right_joint>
+            <wheel_separation>0.105</wheel_separation>
+            <wheel_diameter>0.085</wheel_diameter>
+            <wheel_torque>0.1</wheel_torque>
+            <command_topic>cmd_vel</command_topic>
+            <odometry_topic>odom</odometry_topic>
+            <odometry_frame>odom</odometry_frame>
+            <robot_base_frame>chassis</robot_base_frame>
+        </plugin>
+    </gazebo>
+    <gazebo reference="breadboard"><!-- Change this to the imu cuboid-->
+        <sensor name="my_imu" type="imu">
+            <always_on>true</always_on>
+            <!-- Publish at 30 hz -->
+            <update_rate>30</update_rate>
+            <plugin name="my_imu_plugin" filename="libgazebo_ros_imu_sensor.so">
+            <ros>
+                <!-- Will publish to /imu/data -->
+                <namespace>/imu</namespace>
+                <remapping>~/out:=data</remapping>
+            </ros>
+            <frame_name>breadboard</frame_name>
+            <initial_orientation_as_reference>false</initial_orientation_as_reference>
+            </plugin>
+        </sensor>
+    </gazebo>
+    
+</robot>

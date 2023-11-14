@@ -1,0 +1,4 @@
+[console_scripts]
+control = sbr_pkg.control:main
+simple_sub = sbr_pkg.simple_subscriber:main
+

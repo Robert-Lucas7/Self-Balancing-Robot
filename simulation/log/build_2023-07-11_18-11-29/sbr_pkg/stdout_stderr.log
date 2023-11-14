@@ -1,0 +1,45 @@
+running egg_info
+creating build/sbr_pkg/sbr_pkg.egg-info
+writing build/sbr_pkg/sbr_pkg.egg-info/PKG-INFO
+writing dependency_links to build/sbr_pkg/sbr_pkg.egg-info/dependency_links.txt
+writing entry points to build/sbr_pkg/sbr_pkg.egg-info/entry_points.txt
+writing requirements to build/sbr_pkg/sbr_pkg.egg-info/requires.txt
+writing top-level names to build/sbr_pkg/sbr_pkg.egg-info/top_level.txt
+writing manifest file 'build/sbr_pkg/sbr_pkg.egg-info/SOURCES.txt'
+reading manifest file 'build/sbr_pkg/sbr_pkg.egg-info/SOURCES.txt'
+writing manifest file 'build/sbr_pkg/sbr_pkg.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/rob/dev_ws/src/sbr_pkg/build/sbr_pkg/build
+creating /home/rob/dev_ws/src/sbr_pkg/build/sbr_pkg/build/lib
+creating /home/rob/dev_ws/src/sbr_pkg/build/sbr_pkg/build/lib/sbr_pkg
+copying sbr_pkg/simple_subscriber.py -> /home/rob/dev_ws/src/sbr_pkg/build/sbr_pkg/build/lib/sbr_pkg
+copying sbr_pkg/__init__.py -> /home/rob/dev_ws/src/sbr_pkg/build/sbr_pkg/build/lib/sbr_pkg
+copying sbr_pkg/control.py -> /home/rob/dev_ws/src/sbr_pkg/build/sbr_pkg/build/lib/sbr_pkg
+running install
+/usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+running install_lib
+creating /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/lib/python3.10/site-packages/sbr_pkg
+copying /home/rob/dev_ws/src/sbr_pkg/build/sbr_pkg/build/lib/sbr_pkg/simple_subscriber.py -> /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/lib/python3.10/site-packages/sbr_pkg
+copying /home/rob/dev_ws/src/sbr_pkg/build/sbr_pkg/build/lib/sbr_pkg/__init__.py -> /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/lib/python3.10/site-packages/sbr_pkg
+copying /home/rob/dev_ws/src/sbr_pkg/build/sbr_pkg/build/lib/sbr_pkg/control.py -> /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/lib/python3.10/site-packages/sbr_pkg
+byte-compiling /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/lib/python3.10/site-packages/sbr_pkg/simple_subscriber.py to simple_subscriber.cpython-310.pyc
+byte-compiling /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/lib/python3.10/site-packages/sbr_pkg/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/lib/python3.10/site-packages/sbr_pkg/control.py to control.cpython-310.pyc
+running install_data
+creating /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/share/ament_index
+creating /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/share/ament_index/resource_index
+creating /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/share/ament_index/resource_index/packages
+copying resource/sbr_pkg -> /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/share/ament_index/resource_index/packages
+copying package.xml -> /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/share/sbr_pkg
+creating /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/share/sbr_pkg/launch
+copying launch/sim.launch.py -> /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/share/sbr_pkg/launch
+creating /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/share/sbr_pkg/urdf
+copying urdf/two_wheeled_copied.xacro -> /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/share/sbr_pkg/urdf
+copying urdf/diff_drive_robot.xacro -> /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/share/sbr_pkg/urdf
+running install_egg_info
+Copying build/sbr_pkg/sbr_pkg.egg-info to /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/lib/python3.10/site-packages/sbr_pkg-0.0.0-py3.10.egg-info
+running install_scripts
+Installing simple_sub script to /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/lib/sbr_pkg
+writing list of installed files to '/home/rob/dev_ws/src/sbr_pkg/build/sbr_pkg/install.log'

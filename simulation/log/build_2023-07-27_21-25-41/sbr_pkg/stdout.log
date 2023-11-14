@@ -1,0 +1,23 @@
+running egg_info
+writing build/sbr_pkg/sbr_pkg.egg-info/PKG-INFO
+writing dependency_links to build/sbr_pkg/sbr_pkg.egg-info/dependency_links.txt
+writing entry points to build/sbr_pkg/sbr_pkg.egg-info/entry_points.txt
+writing requirements to build/sbr_pkg/sbr_pkg.egg-info/requires.txt
+writing top-level names to build/sbr_pkg/sbr_pkg.egg-info/top_level.txt
+reading manifest file 'build/sbr_pkg/sbr_pkg.egg-info/SOURCES.txt'
+writing manifest file 'build/sbr_pkg/sbr_pkg.egg-info/SOURCES.txt'
+running build
+running build_py
+copying sbr_pkg/control.py -> /home/rob/dev_ws/src/sbr_pkg/build/sbr_pkg/build/lib/sbr_pkg
+running install
+running install_lib
+copying /home/rob/dev_ws/src/sbr_pkg/build/sbr_pkg/build/lib/sbr_pkg/control.py -> /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/lib/python3.10/site-packages/sbr_pkg
+byte-compiling /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/lib/python3.10/site-packages/sbr_pkg/control.py to control.cpython-310.pyc
+running install_data
+running install_egg_info
+removing '/home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/lib/python3.10/site-packages/sbr_pkg-0.0.0-py3.10.egg-info' (and everything under it)
+Copying build/sbr_pkg/sbr_pkg.egg-info to /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/lib/python3.10/site-packages/sbr_pkg-0.0.0-py3.10.egg-info
+running install_scripts
+Installing control script to /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/lib/sbr_pkg
+Installing simple_sub script to /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/lib/sbr_pkg
+writing list of installed files to '/home/rob/dev_ws/src/sbr_pkg/build/sbr_pkg/install.log'

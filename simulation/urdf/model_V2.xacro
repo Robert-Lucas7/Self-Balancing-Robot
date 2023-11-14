@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+
+<robot name="sbr" xmlns:xacro="https://www.ros.org/wiki/xacro">
+    <link name="base_footprint">
+
+    </link>
+    
+    <link name="chassis">
+        <inertial>
+          <mass value="1.482"/>
+          <origin rpy="0 0 0" xyz="0 0 0"/>
+          <inertia ixx="0.009028665" ixy="-0.000015630" iyy="0.006548161"
+              ixz="0" iyz = "0" izz="0.003852133"/>
+        </inertial>
+        <visual>
+          <origin rpy="0 0 0" xyz="0 0 0"/>
+          <geometry>
+            <mesh filename="$(find sbr_pkg)/meshes/CHASSIS_STL.stl" scale="0.001 0.001 0.001"/>
+          </geometry>
+        </visual>
+        <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+          <geometry>
+            <mesh filename="$(find sbr_pkg)/meshes/CHASSIS_STL.stl" scale="0.001 0.001 0.001"/>
+          </geometry>
+        </collision>
+    </link>
+    <joint name="chassis_joint" type="fixed">
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <child link="chassis"/>
+            <parent link="base_footprint"/>
+
+        </joint>
+
+  <xacro:macro name="wheel" params="prefix">
+    <link name="${prefix}_wheel">
+      <inertial>
+          <mass value="0.053"/>
+          <origin rpy="1.5707 0 0" xyz="0 0 0"/>
+          <inertia ixx="0.000011394" ixy = "0" iyy="0.000011394" ixz="0" iyz="0" izz="0.000011966"/>
+        </inertial>
+        
+        <collision name="link_right_wheel_collision">
+        <origin rpy="0 1.5707 1.5707" xyz="0 0 0" />
+        <geometry>
+            <cylinder length="0.035" radius="0.0425"/>
+        </geometry>
+        </collision>
+        
+        <visual name="link_right_wheel_visual">
+        <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+        <geometry>
+            <cylinder length="0.035" radius="0.0425"/>
+        </geometry>      
+        </visual>
+    </link>
+  </xacro:macro>
+    
+  <xacro:macro name="wheel_joint" params="prefix axis"> <!-- -1 -->
+    <joint name="${prefix}_wheel_joint" type="continuous">
+      <origin rpy="0 0 0" xyz="0 ${axis * 0.0915} -0.031"/>
+      <child link="${prefix}_wheel" />
+      <parent link="base_footprint"/>
+      <axis rpy="0 0 0" xyz="0 ${axis} 0"/>
+      <limit effort="10000" velocity="1000"/>
+      <joint_properties damping="1.0" friction="1.0" />
+    </joint>  
+  </xacro:macro>
+
+  <xacro:wheel prefix="right"/>
+  <xacro:wheel prefix="left"/>
+
+  <xacro:wheel_joint prefix="right" axis="-1" />
+  <xacro:wheel_joint prefix="left" axis="1" />
+  
+    
+  
+  <gazebo>
+    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <update_rate>20</update_rate>
+      <left_joint>left_wheel_joint</left_joint>
+      <right_joint>right_wheel_joint</right_joint>
+      <wheel_separation>0.105</wheel_separation>
+      <wheel_diameter>0.085</wheel_diameter>
+      <wheel_torque>0.1</wheel_torque>
+      <command_topic>cmd_vel</command_topic>
+      <odometry_topic>odom</odometry_topic>
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>chassis</robot_base_frame>
+    </plugin>
+    
+  	
+ 
+  </gazebo>
+  <gazebo reference="chassis">
+  	<sensor name="my_imu" type="imu">
+	    <always_on>true</always_on>
+	    
+	    <update_rate>30</update_rate>
+	    <plugin name="my_imu_plugin" filename="libgazebo_ros_imu_sensor.so">
+	      <ros>
+
+		<namespace>/imu</namespace>
+		<remapping>~/out:=data</remapping>
+	      </ros>
+	      <frame_name>chassis</frame_name>
+	      <initial_orientation_as_reference>false</initial_orientation_as_reference>
+	    </plugin>
+  	</sensor>
+  </gazebo>
+</robot>

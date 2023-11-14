@@ -1,0 +1,24 @@
+[0.520s] Invoking command in '/home/rob/dev_ws/src/sbr_pkg': PYTHONPATH=/home/rob/dev_ws/src/sbr_pkg/build/sbr_pkg/prefix_override:/home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base build/sbr_pkg build --build-base /home/rob/dev_ws/src/sbr_pkg/build/sbr_pkg/build install --record /home/rob/dev_ws/src/sbr_pkg/build/sbr_pkg/install.log --single-version-externally-managed
+[0.707s] running egg_info
+[0.708s] writing build/sbr_pkg/sbr_pkg.egg-info/PKG-INFO
+[0.708s] writing dependency_links to build/sbr_pkg/sbr_pkg.egg-info/dependency_links.txt
+[0.709s] writing entry points to build/sbr_pkg/sbr_pkg.egg-info/entry_points.txt
+[0.709s] writing requirements to build/sbr_pkg/sbr_pkg.egg-info/requires.txt
+[0.709s] writing top-level names to build/sbr_pkg/sbr_pkg.egg-info/top_level.txt
+[0.710s] reading manifest file 'build/sbr_pkg/sbr_pkg.egg-info/SOURCES.txt'
+[0.710s] writing manifest file 'build/sbr_pkg/sbr_pkg.egg-info/SOURCES.txt'
+[0.711s] running build
+[0.711s] running build_py
+[0.711s] running install
+[0.711s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[0.711s]   warnings.warn(
+[0.711s] running install_lib
+[0.712s] running install_data
+[0.713s] copying launch/sim.launch.py -> /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/share/sbr_pkg/launch
+[0.713s] running install_egg_info
+[0.714s] removing '/home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/lib/python3.10/site-packages/sbr_pkg-0.0.0-py3.10.egg-info' (and everything under it)
+[0.715s] Copying build/sbr_pkg/sbr_pkg.egg-info to /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/lib/python3.10/site-packages/sbr_pkg-0.0.0-py3.10.egg-info
+[0.715s] running install_scripts
+[0.731s] Installing simple_sub script to /home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/lib/sbr_pkg
+[0.731s] writing list of installed files to '/home/rob/dev_ws/src/sbr_pkg/build/sbr_pkg/install.log'
+[0.758s] Invoked command in '/home/rob/dev_ws/src/sbr_pkg' returned '0': PYTHONPATH=/home/rob/dev_ws/src/sbr_pkg/build/sbr_pkg/prefix_override:/home/rob/dev_ws/src/sbr_pkg/install/sbr_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base build/sbr_pkg build --build-base /home/rob/dev_ws/src/sbr_pkg/build/sbr_pkg/build install --record /home/rob/dev_ws/src/sbr_pkg/build/sbr_pkg/install.log --single-version-externally-managed
